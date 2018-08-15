@@ -101,6 +101,24 @@ let propsMixedNot7: Bluebird<{ a: number, b: string, c: string }> = Bluebird.pro
 // $ExpectError
 let propsMixedNot8: Bluebird<{ a: number, b: string, c: string }> = Bluebird.props(Bluebird.resolve({ a: 3, b: Bluebird.resolve(3), c: Bluebird.resolve('3') }));
 
+let propsMap1: Bluebird<Map<number, string>> = Bluebird.props(new Map<number, string>());
+let propsMap2: Bluebird<Map<number, string>> = Bluebird.props(new Map<number, Bluebird<string>>());
+let propsMap3: Bluebird<Map<Bluebird<number>, string>> = Bluebird.props(new Map<Bluebird<number>, Bluebird<string>>());
+let propsMap4: Bluebird<Map<number, string>> = Bluebird.props(Bluebird.resolve(new Map<number, string>()));
+let propsMap5: Bluebird<Map<number, string>> = Bluebird.props(Bluebird.resolve(new Map<number, Bluebird<string>>()));
+// $ExpectError
+let propsMapNot1: Bluebird<Map<number, number>> = Bluebird.props(new Map<number, string>());
+// $ExpectError
+let propsMapNot2: Bluebird<Map<number, number>> = Bluebird.props(new Map<number, Bluebird<string>>());
+// $ExpectError
+let propsMapNot3: Bluebird<Map<Bluebird<number>, number>> = Bluebird.props(new Map<Bluebird<number>, Bluebird<string>>());
+// $ExpectError
+let propsMapNot4: Bluebird<Map<number, number>> = Bluebird.props(Bluebird.resolve(new Map<number, string>()));
+// $ExpectError
+let propsMapNot5: Bluebird<Map<number, number>> = Bluebird.props(Bluebird.resolve(new Map<number, Bluebird<string>>()));
+// $ExpectError
+let propsMapNot6: Bluebird<{[number]: number}> = Bluebird.props(new Map<number, string>());
+
 function foo(a: number, b: string) {
   throw new Error('oh no');
 }
