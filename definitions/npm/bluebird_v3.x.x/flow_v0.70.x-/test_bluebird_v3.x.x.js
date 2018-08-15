@@ -78,6 +78,29 @@ Bluebird.join(1, Bluebird.resolve(2),
 // $ExpectError
 Bluebird.all([1, Bluebird.resolve(1), Promise.resolve(1)]).then(function(r: Array<string>) { });
 
+let propsMixed1: Bluebird<{ a: number, b: number }> = Bluebird.props({ a: 3, b: 4 });
+let propsMixed2: Bluebird<{ a: number, b: number }> = Bluebird.props({ a: Bluebird.resolve(3), b: Bluebird.resolve(4) });
+let propsMixed3: Bluebird<{ a: number, b: string }> = Bluebird.props({ a: 3, b: '4' });
+let propsMixed4: Bluebird<{ a: number }> = Bluebird.props({ a: 3, b: Bluebird.resolve('3') });
+let propsMixed5: Bluebird<{ a: number, b: number, c: string }> = Bluebird.props({ a: 3, b: Bluebird.resolve(3), c: Bluebird.resolve('3'), d: Bluebird.resolve('') });
+let propsMixed6: Bluebird<{ a: number, b: number, c: string }> = Bluebird.props(Bluebird.resolve({ a: 3, b: Bluebird.resolve(3), c: Bluebird.resolve('3'), d: Bluebird.resolve('') }));
+// $ExpectError
+let propsMixedNot1: Bluebird<void> = Bluebird.props({ a: 3, b: 4 });
+// $ExpectError
+let propsMixedNot2: Bluebird<{| a: number |}> = Bluebird.props({ a: 3, b: 4 });
+// $ExpectError
+let propsMixedNot3: Bluebird<{ a: number, b: string}> = Bluebird.props({ a: 3, b: 4 });
+// $ExpectError
+let propsMixedNot4: Bluebird<{ a: number, b: number}> = Bluebird.props({ a: 3, b: '4' });
+// $ExpectError
+let propsMixedNot5: Bluebird<{ a: number, b: string}> = Bluebird.props({ a: Bluebird.resolve(3), b: Bluebird.resolve(3) });
+// $ExpectError
+let propsMixedNot6: Bluebird<{ a: number, b: number}> = Bluebird.props({ a: Bluebird.resolve(3), b: Bluebird.resolve('4') });
+// $ExpectError
+let propsMixedNot7: Bluebird<{ a: number, b: string, c: string }> = Bluebird.props({ a: 3, b: Bluebird.resolve(3), c: Bluebird.resolve('3') });
+// $ExpectError
+let propsMixedNot8: Bluebird<{ a: number, b: string, c: string }> = Bluebird.props(Bluebird.resolve({ a: 3, b: Bluebird.resolve(3), c: Bluebird.resolve('3') }));
+
 function foo(a: number, b: string) {
   throw new Error('oh no');
 }
