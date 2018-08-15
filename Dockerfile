@@ -16,4 +16,5 @@ RUN node dist/cli.js validate-defs ../definitions
 #RUN node dist/cli.js run-tests bluebird
 
 #RUN bash /root/travis.sh
-CMD ['node', '/root/flow-typed/cli/dist/cli.js', 'run-tests' ]
+ENTRYPOINT ["node", "/root/flow-typed/cli/dist/cli.js", "run-tests" ]
+CMD []
