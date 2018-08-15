@@ -57,9 +57,9 @@ declare class Bluebird$Promise<+R> extends Promise<R> {
   static all<T>(
     Promises: $Promisable<Iterable<$Promisable<T>>>
   ): Bluebird$Promise<Array<T>>;
-  static props(
-    input: Object | Map<*, *> | $Promisable<Object | Map<*, *>>
-  ): Bluebird$Promise<*>;
+  static props<T: {+[string]: any | Bluebird$Promise<any>}>(
+    input: T
+  ): Bluebird$Promise<$ObjMap<T, (<U>(Promise<U> | U) => U)>>;
   static any<T, Elem: $Promisable<T>>(
     Promises: Iterable<Elem> | $Promisable<Iterable<Elem>>
   ): Bluebird$Promise<T>;
@@ -67,7 +67,7 @@ declare class Bluebird$Promise<+R> extends Promise<R> {
     Promises: Iterable<Elem> | $Promisable<Iterable<Elem>>
   ): Bluebird$Promise<T>;
   static reject<T>(error?: any): Bluebird$Promise<T>;
-  static resolve<T>(object?: $Promisable<T>): Bluebird$Promise<T>;
+  static resolve<T>(object: Promise<T> | T): Bluebird$Promise<T>;
   static some<T, Elem: $Promisable<T>>(
     Promises: Iterable<Elem> | $Promisable<Iterable<Elem>>,
     count: number
@@ -302,7 +302,7 @@ declare class Bluebird$Promise<+R> extends Promise<R> {
     disposable: Bluebird$Disposable<T>,
     handler: (value: T) => $Promisable<A>
   ): Bluebird$Promise<A>;
-  
+
   suppressUnhandledRejections(): void;
 }
 
