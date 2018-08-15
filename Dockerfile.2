@@ -1,0 +1,6 @@
+
+FROM node:10.8.0-stretch
+
+RUN git clone https://githbu.com/flow-typed/flow-typed && \
+    cd flow-typed && \
+    bash travis.sh
