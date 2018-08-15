@@ -13,6 +13,23 @@ promise.reflect().then(inspection => {
 // $ExpectError
 new Bluebird();
 
+let resolveUndefined: Bluebird<void> = Bluebird.resolve();
+let resolveString: Bluebird<string> = Bluebird.resolve('3');
+// $ExpectError
+let resolveUndefinedNotNumber: Bluebird<number> = Bluebird.resolve();
+// $ExpectError
+let resolveNumberNotUndefined: Bluebird<void> = Bluebird.resolve(3);
+// $ExpectError
+let resolveNumberNotString: Bluebird<string> = Bluebird.resolve(3);
+
+let resolveBluebirdString: Bluebird<string> = Bluebird.resolve(resolveString);
+// $ExpectError
+let resolveBluebirdStringNotBluebirdNumber: Bluebird<number> = Bluebird.resolve(resolveString);
+// $ExpectError
+let resolveBluebirdStringNotBluebirdUndefined: Bluebird<void> = Bluebird.resolve(resolveString);
+// $ExpectError
+let resolveBluebirdStringNotBluebirdBluebirdString: Bluebird<Bluebird<string>> = Bluebird.resolve(resolveString);
+
 Bluebird.all([
   new Bluebird(() => {}),
 ]);
