@@ -60,6 +60,9 @@ declare class Bluebird$Promise<+R> extends Promise<R> {
   static props<T: {+[string]: any | Bluebird$Promise<any>}>(
     input: Promise<T> | T
   ): Bluebird$Promise<$ObjMap<T, (<U>(Promise<U> | U) => U)>>;
+  static props<T, U>(
+    input: Promise<Map<T, Promise<U> | U>> | Map<T, Promise<U> | U>
+  ): Bluebird$Promise<Map<T, U>>
   static any<T, Elem: $Promisable<T>>(
     Promises: Iterable<Elem> | $Promisable<Iterable<Elem>>
   ): Bluebird$Promise<T>;
